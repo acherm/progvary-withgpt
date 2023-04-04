@@ -1,2 +1,3 @@
-# progvary-withgpt
-Programming variability with GPT-based assistant
+# Programming variability with GPT-based assistant
+
+ * `varyfloatC`: conditional compilation + Python generator 
