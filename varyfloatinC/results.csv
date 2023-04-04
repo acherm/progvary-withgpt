@@ -1,0 +1,37 @@
+compiler,flags,type,result
+gcc,,original,z (using long double) = 0x8.0000000000004p-3
+gcc,,double,z (using double) = 0x1.0000000000001p+0
+gcc,,float,z (using float) = 0x1p+0
+gcc,-mfpmath=387,original,z (using long double) = 0x8.0000000000004p-3
+gcc,-mfpmath=387,double,z (using double) = 0x1p+0
+gcc,-mfpmath=387,float,z (using float) = 0x1p+0
+gcc,-ffast-math,original,z (using long double) = 0x8.0000000000004p-3
+gcc,-ffast-math,double,z (using double) = 0x1.0000000000001p+0
+gcc,-ffast-math,float,z (using float) = 0x1p+0
+gcc,-fno-signed-zeros,original,z (using long double) = 0x8.0000000000004p-3
+gcc,-fno-signed-zeros,double,z (using double) = 0x1.0000000000001p+0
+gcc,-fno-signed-zeros,float,z (using float) = 0x1p+0
+gcc,-fno-trapping-math,original,z (using long double) = 0x8.0000000000004p-3
+gcc,-fno-trapping-math,double,z (using double) = 0x1.0000000000001p+0
+gcc,-fno-trapping-math,float,z (using float) = 0x1p+0
+gcc,-fno-rounding-math,original,z (using long double) = 0x8.0000000000004p-3
+gcc,-fno-rounding-math,double,z (using double) = 0x1.0000000000001p+0
+gcc,-fno-rounding-math,float,z (using float) = 0x1p+0
+clang,,original,z (using long double) = 0x8.0000000000004p-3
+clang,,double,z (using double) = 0x1.0000000000001p+0
+clang,,float,z (using float) = 0x1p+0
+clang,-mno-sse,original,z (using long double) = 0x8.0000000000004p-3
+clang,-mno-sse,double,z (using double) = 0x0.000000004p-1022
+clang,-mno-sse,float,z (using float) = 0x0.00000000001p-1022
+clang,-ffast-math,original,z (using long double) = 0x8.0000000000004p-3
+clang,-ffast-math,double,z (using double) = 0x1.0000000000001p+0
+clang,-ffast-math,float,z (using float) = 0x1p+0
+clang,-fno-signed-zeros,original,z (using long double) = 0x8.0000000000004p-3
+clang,-fno-signed-zeros,double,z (using double) = 0x1.0000000000001p+0
+clang,-fno-signed-zeros,float,z (using float) = 0x1p+0
+clang,-fno-trapping-math,original,z (using long double) = 0x8.0000000000004p-3
+clang,-fno-trapping-math,double,z (using double) = 0x1.0000000000001p+0
+clang,-fno-trapping-math,float,z (using float) = 0x1p+0
+clang,-fno-rounding-math,original,z (using long double) = 0x8.0000000000004p-3
+clang,-fno-rounding-math,double,z (using double) = 0x1.0000000000001p+0
+clang,-fno-rounding-math,float,z (using float) = 0x1p+0
