@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n\n#include <stdio.h>\n\n#ifdef DOUBLE\n    typedef double my_type;\n#elif FLOAT\n    typedef float my_type;\n#else\n    typedef long double my_type;\n#endif\n\nint main() {\n    // Declare and initialize variables\n    my_type x = 1.0;\n    my_type y = 0x1p-53 + 0x1p-64;\n    my_type z = x + y;\n\n    // Print the value of z\n    printf(\"z = %a\\n\", z);\n\n    return 0;\n}\n\nTo compile with double type, use the following command:\ngcc -DDOUBLE main.c -o main\n\nTo compile with float type, use the following command:\ngcc -DFLOAT main.c -o main"
+    }
+  ],
+  "created": 1681462590,
+  "id": "cmpl-759WI2lgQU5QlJnnOaIGurzqoilgf",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 197,
+    "prompt_tokens": 152,
+    "total_tokens": 349
+  }
+}

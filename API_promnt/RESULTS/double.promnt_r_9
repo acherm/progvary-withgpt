@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n\nTo do this, I would use the following code:\n#include <stdio.h>\n\n#ifdef VERSION_1\n    typedef double type;\n#elif defined(VERSION_2)\n    typedef float type;\n#else\n    typedef long double type;\n#endif\n\nint main() {\n    // Declare and initialize variables\n    type x = 1.0;\n    type y = 0x1p-53 + 0x1p-64;\n    type z = x + y;\n\n    // Print the value of z\n    printf(\"z = %a\\n\", z);\n\n    return 0;\n}\n\nTo compile the program for the desired variation, the following command line can be used:\ngcc -DVERSION_1 program.c // For version 1 with double\ngcc -DVERSION_2 program.c // For version 2 with float"
+    }
+  ],
+  "created": 1681462783,
+  "id": "cmpl-759ZPdahAoOTKV3wPlOHHeIY8wj2A",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 201,
+    "prompt_tokens": 152,
+    "total_tokens": 353
+  }
+}

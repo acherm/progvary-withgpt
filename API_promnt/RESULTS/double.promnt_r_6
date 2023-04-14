@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n\n#include <stdio.h>\n\n#ifdef DOUBLE\n    typedef double my_type;\n#elif FLOAT\n    typedef float my_type;\n#else\n    typedef long double my_type;\n#endif\n\nint main() {\n    // Declare and initialize variables\n    my_type x = 1.0;\n    my_type y = 0x1p-53 + 0x1p-64;\n    my_type z = x + y;\n\n    // Print the value of z\n    printf(\"z = %a\\n\", z);\n\n    return 0;\n}\n\nWhen compiling the program, the compiler should be provided with the appropriate flag, depending on which type should be used. For example:\n\ngcc -DDOUBLE my_program.c"
+    }
+  ],
+  "created": 1681462687,
+  "id": "cmpl-759XriBMQISLb806ikZGDu4QgmT2D",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 185,
+    "prompt_tokens": 152,
+    "total_tokens": 337
+  }
+}
