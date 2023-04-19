@@ -1,0 +1,79 @@
+We asked this:
+I have the following program #include <stdio.h>
+
+
+
+int main() {
+    // Declare and initialize variables
+    long double x = 1.0;
+    long double y = 0x1p-53 + 0x1p-64;
+    long double z = x + y;
+
+    // Print the value of z
+    printf("z = %a\n", z);
+
+    return 0;
+} and I'd like to create variations over this program using conditional compilation and #ifdef cpp directives... specifically, I'd like to create a first variation that consists in replacing the type long double by double... and another alternative variation that consists in replacing long double by float
+
+You answer this:
+You can use the preprocessor directives `#ifdef`, `#elif`, and `#endif` to create conditional compilation. Here's an example that shows how to create the variations you mentioned:
+
+```c
+#include <stdio.h>
+
+// Define the type to use as an alias
+#ifdef USE_DOUBLE
+    typedef double real;
+#elif defined(USE_FLOAT)
+    typedef float real;
+#else
+    typedef long double real;
+#endif
+
+int main() {
+    // Declare and initialize variables
+    real x = 1.0;
+    real y = 0x1p-53 + 0x1p-64;
+    real z = x + y;
+
+    // Print the value of z
+    #ifdef USE_DOUBLE
+        printf("z (using double) = %a\n", z);
+    #elif defined(USE_FLOAT)
+        printf("z (using float) = %a\n", z);
+    #else
+        printf("z (using long double) = %La\n", z);
+    #endif
+
+    return 0;
+}
+```
+
+To compile and run the different variations, you can use the following commands:
+
+1. For the original version using `long double`:
+
+```
+gcc -o original main.c
+./original
+```
+
+2. For the variation using `double`:
+
+```
+gcc -DUSE_DOUBLE -o double_variation main.c
+./double_variation
+```
+
+3. For the variation using `float`:
+
+```
+gcc -DUSE_FLOAT -o float_variation main.c
+./float_variation
+```
+
+These commands will compile and run the different variations of the program according to the defined type.
+
+
+Now,
+write a Python script that compiles/executes the three variants above, with and without the -mfpmath=387 of gcc... Compile also with clang. Synthesize all results in a CSV containing the configuration (flag, with or without -mfpmath=387, compiler) and the different outputs

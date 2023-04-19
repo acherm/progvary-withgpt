@@ -36,7 +36,7 @@ def generate_promnt(input_file,output_dir,i):
         presence_penalty=0
     )
     text_file.close
-    destination_file = open(output_dir+'/'+os.path.basename(input_file)+'_r_'+str(i), 'w')
+    destination_file = open(output_dir+'/'+os.path.basename(input_file)+'_call_'+str(i)+".api", 'w')
     print(response, file = destination_file)
     destination_file.close()
     time.sleep(random.randint(20,40))
@@ -62,5 +62,5 @@ if not target_dir.exists():
 for entry in target_dir.iterdir():
     if entry.is_file():
         for i in range(numberofpromnts):
-            #generate_promnt(entry, outputdir, i)
-            print_json(entry,outputdir,i)
+            generate_promnt(entry, outputdir, i)
+            #print_json(entry,outputdir,i)

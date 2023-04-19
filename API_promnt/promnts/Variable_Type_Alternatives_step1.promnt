@@ -1,0 +1,15 @@
+
+I have the following program 
+#include <stdio.h>
+int main() {
+    // Declare and initialize variables
+    long double x = 1.0;
+    long double y = 0x1p-53 + 0x1p-64;
+    long double z = x + y;
+
+    // Print the value of z
+    printf("z = %a\n", z);
+
+    return 0;
+} 
+and I'd like to create variations over this program using conditional compilation... Specifically, I'd like to create a first variation that consists in replacing the type long double by double... and another alternative variation that consists in replacing long double by float
