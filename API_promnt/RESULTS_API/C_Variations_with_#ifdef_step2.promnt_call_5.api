@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nHere's an example of a Python script that compiles and executes the three variants of the program above, with and without the -mfpmath=387 flag of gcc, and with clang:\n\n```python\nimport subprocess\n\n# Variables to store the results\nresults = []\n\n# Compile and execute the original version using long double with gcc\np = subprocess.run(\n    [\"gcc\", \"-o\", \"original_gcc\", \"main.c\"],\n    stdout=subprocess.PIPE,\n    stderr=subprocess.PIPE\n)\n\n# Execute the program and get the output\noutput = subprocess.run(\n    [\"./original_gcc\"],\n    stdout=subprocess.PIPE,\n    stderr=subprocess.PIPE\n).stdout.decode(\"utf-8\")\n\n# Append the results to the list\nresults.append({\n    \"flag\": \"gcc (no flags)\",\n    \"compiler\": \"gcc\",\n    \"output\": output\n})\n\n# Compile and execute the original version using long double with gcc\n# and the -mfpmath=387 flag\np = subprocess.run(\n    [\"gcc\", \"-mfpmath=387\", \"-o\", \"original_gcc_387\", \"main.c\"],\n    stdout=subprocess.PIPE,\n    stderr=subprocess.PIPE\n)\n\n# Execute the program and get the output\noutput = subprocess.run(\n    [\"./original_gcc_387\"],\n    stdout=subprocess.PIPE,\n    stderr=subprocess.PIPE\n).stdout.decode(\"utf-8\")\n\n# Append the results to the list\nresults.append({\n    \"flag\": \"gcc (-mfpmath=387)\",\n    \"compiler\": \"gcc\",\n    \"output\": output\n})\n\n# Compile and execute the variation using double with gcc\np = subprocess.run(\n    [\"gcc\", \"-DUSE_DOUBLE\", \"-o\", \"double_variation_gcc\", \"main."
+    }
+  ],
+  "created": 1681916546,
+  "id": "cmpl-773cAYyUKyzOaQraohBkgOT0fn8NU",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 500,
+    "prompt_tokens": 661,
+    "total_tokens": 1161
+  }
+}

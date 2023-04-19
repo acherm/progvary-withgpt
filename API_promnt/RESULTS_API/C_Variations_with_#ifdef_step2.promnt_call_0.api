@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nHere is an example of a Python script that compiles/executes the three variants above, with and without the -mfpmath=387 flag:\n\n```python\nimport subprocess\n\n# Define the compiler and flags to use \ncompiler = [\"gcc\", \"clang\"]\nflags = [\"\", \"-mfpmath=387\"]\nvariations = [\"original\", \"double_variation\", \"float_variation\"] \n\n# Create a CSV file to store the results\ncsv_file = open(\"results.csv\", \"w\")\ncsv_file.write(\"configuration,output\\n\")\n\n# Compile and execute the program with different compilers and flags\nfor c in compiler:\n    for f in flags:\n        for v in variations:\n            # Compile the program\n            subprocess.run([c, f, \"-o\", v, v+\".c\"])\n            # Execute the program and capture the output\n            output = subprocess.run([\"./\"+v], capture_output=True).stdout.decode(\"utf-8\").strip()\n            # Write the configuration and output to the CSV\n            csv_file.write(\"{},{}\\n\".format(c+\" \"+f+\" \"+v, output))\n\n# Close the CSV file\ncsv_file.close()\n```"
+    }
+  ],
+  "created": 1681916318,
+  "id": "cmpl-773YUl6gLky1AXmntxNvrolwjwrkx",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 302,
+    "prompt_tokens": 661,
+    "total_tokens": 963
+  }
+}

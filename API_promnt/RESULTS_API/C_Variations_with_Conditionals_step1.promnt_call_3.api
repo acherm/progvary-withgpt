@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n#ifdef DOUBLE\n#include <stdio.h>\nint main() {\n    // Declare and initialize variables\n    double x = 1.0;\n    double y = 0x1p-53 + 0x1p-64;\n    double z = x + y;\n\n    // Print the value of z\n    printf(\"z = %a\\n\", z);\n\n    return 0;\n} \n\n#elif FLOAT\n#include <stdio.h>\nint main() {\n    // Declare and initialize variables\n    float x = 1.0;\n    float y = 0x1p-53 + 0x1p-64;\n    float z = x + y;\n\n    // Print the value of z\n    printf(\"z = %a\\n\", z);\n\n    return 0;\n} \n\n#endif"
+    }
+  ],
+  "created": 1681916062,
+  "id": "cmpl-773UMAWg8GSJamyhTNT5REbS5XZ8V",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 195,
+    "prompt_tokens": 146,
+    "total_tokens": 341
+  }
+}

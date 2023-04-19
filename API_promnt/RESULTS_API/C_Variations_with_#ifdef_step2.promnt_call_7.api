@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nHere is an example Python script that can be used to compile and execute the three variants of the program with and without the `-mfpmath=387` flag and using both GCC and Clang compilers:\n\n```python\nimport subprocess\nimport csv\n\nvariations = [\n    (\"original\", \"gcc\"),\n    (\"original\", \"clang\"),\n    (\"double\", \"gcc\"),\n    (\"double\", \"clang\"),\n    (\"float\", \"gcc\"),\n    (\"float\", \"clang\"),\n]\n\nflags = [\"\", \"-mfpmath=387\"]\n\n# Create CSV file\nwith open(\"output.csv\", \"w\") as csvfile:\n    writer = csv.writer(csvfile)\n    # Write header\n    writer.writerow([\"configuration\", \"output\"])\n\n    # Compile and execute each variation\n    for variation, compiler in variations:\n        for flag in flags:\n            # Compile the program\n            cmd = [\n                compiler,\n                flag,\n                \"-o\",\n                variation + \"_\" + compiler + \"_\" + flag.replace(\"=\", \"_\"),\n                \"main.c\",\n            ]\n            subprocess.run(cmd)\n\n            # Execute the compiled program\n            cmd = [variation + \"_\" + compiler + \"_\" + flag.replace(\"=\", \"_\")]\n            output = subprocess.check_output(cmd).decode(\"utf-8\")\n\n            # Write the result to the CSV file\n            writer.writerow([variation + \"_\" + compiler + \"_\" + flag, output])\n\nprint(\"Done!\")\n```"
+    }
+  ],
+  "created": 1681916625,
+  "id": "cmpl-773dRrZ2n6tii6hYp3YFDPjtItixU",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 372,
+    "prompt_tokens": 661,
+    "total_tokens": 1033
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n\nNo, there is no equivalent of -mfpmath=387 for Clang. Clang only supports the x87 floating-point math model, which is equivalent to -mfpmath=sse."
+    }
+  ],
+  "created": 1681915771,
+  "id": "cmpl-773PftvBN69UhlOPrLwctviW6w3Rc",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 46,
+    "prompt_tokens": 20,
+    "total_tokens": 66
+  }
+}

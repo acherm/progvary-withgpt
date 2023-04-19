@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n#include <stdio.h>\n\n// First Variation\n#ifdef VARIATION1\n    double x = 1.0;\n    double y = 0x1p-53 + 0x1p-64;\n    double z = x + y;\n#endif\n\n// Second Variation\n#ifdef VARIATION2\n    float x = 1.0;\n    float y = 0x1p-53 + 0x1p-64;\n    float z = x + y;\n#endif\n\nint main() {\n\n    #ifdef VARIATION1\n        printf(\"z (Variation1) = %a\\n\", z);\n    #endif\n\n    #ifdef VARIATION2\n        printf(\"z (Variation2) = %a\\n\", z);\n    #endif\n\n    return 0;\n}"
+    }
+  ],
+  "created": 1681916128,
+  "id": "cmpl-773VQLWMQeGLiafPlQpIGhTBBKn6y",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 192,
+    "prompt_tokens": 146,
+    "total_tokens": 338
+  }
+}

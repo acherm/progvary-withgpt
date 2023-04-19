@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n\nNo, Clang does not support the -mfpmath=387 flag."
+    }
+  ],
+  "created": 1681915674,
+  "id": "cmpl-773O6inwnDt4Gxi5XaoONfmCMx2wx",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 19,
+    "prompt_tokens": 20,
+    "total_tokens": 39
+  }
+}

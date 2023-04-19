@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nYou answer this:\nYou can use Python's `pandas` module to write the CSV. Here's an example script to compile and run the C program with different configurations and write the results to a CSV file using pandas:\n\n```python\nimport pandas as pd\nimport subprocess\n\ndef compile_and_run(compiler, flags, type):\n    commands = [\n        f\"{compiler} {flags} -o original assoc.c\",\n        f\"{compiler} {flags} -DUSE_DOUBLE -o double_variation assoc.c\",\n        f\"{compiler} {flags} -DUSE_FLOAT -o float_variation assoc.c\",\n    ]\n\n    results = []\n    for cmd in commands:\n        subprocess.run(cmd, shell=True, check=True)\n\n        binary = cmd.split()[-1]\n        output = subprocess.check_output(f'./{binary}', shell=True).decode().strip()\n        results.append(output)\n\n    return pd.DataFrame({'compiler': compiler, 'flags': flags, 'type': type, 'result': results})\n\ndef main():\n    configurations = [\n        ('gcc', '', 'long double'),\n        ('gcc', '-mfpmath=387', 'long double'),\n        ('clang', '', 'long double'),\n        ('gcc', '', 'double'),\n        ('gcc', '-mfpmath=387', 'double'),\n        ('clang', '', 'double'),\n        ('gcc', '', 'float'),\n        ('gcc', '-mfpmath=387', 'float'),\n        ('clang', '', 'float'),\n    ]\n\n    df = pd.concat([compile_and_run(compiler, flags, type) for compiler, flags, type in configurations], ignore_index=True)\n    df.to_csv('results.csv', index=False)\n\nif __name__ == '__main__':\n    main()\n```\n\nThis script will compile and run the three variants of the C program with the specified"
+    }
+  ],
+  "created": 1681919123,
+  "id": "cmpl-774HjnleyJJupK8FaMbrJsFda0j4c",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 500,
+    "prompt_tokens": 1256,
+    "total_tokens": 1756
+  }
+}

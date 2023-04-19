@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n#include <stdio.h>\n#if defined VARIATION1\n    typedef double xyz_type;\n#elif defined VARIATION2\n    typedef float xyz_type;\n#endif\n\nint main() {\n    // Declare and initialize variables\n    xyz_type x = 1.0;\n    xyz_type y = 0x1p-53 + 0x1p-64;\n    xyz_type z = x + y;\n\n    // Print the value of z\n    printf(\"z = %a\\n\", z);\n\n    return 0;\n}"
+    }
+  ],
+  "created": 1681916019,
+  "id": "cmpl-773TfDz9DOOLgnOlcFpv9Xftlga2w",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 137,
+    "prompt_tokens": 146,
+    "total_tokens": 283
+  }
+}

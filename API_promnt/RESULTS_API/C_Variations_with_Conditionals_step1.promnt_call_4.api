@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n// Variation 1 - Replace type long double with double\n#include <stdio.h>\n#ifdef VARIATION_1\n    #define TYPE double\n#else\n    #define TYPE long double\n#endif\nint main() {\n    // Declare and initialize variables\n    TYPE x = 1.0;\n    TYPE y = 0x1p-53 + 0x1p-64;\n    TYPE z = x + y;\n\n    // Print the value of z\n    printf(\"z = %a\\n\", z);\n\n    return 0;\n}\n\n// Variation 2 - Replace type long double with float\n#include <stdio.h>\n#ifdef VARIATION_2\n    #define TYPE float\n#else\n    #define TYPE long double\n#endif\nint main() {\n    // Declare and initialize variables\n    TYPE x = 1.0;\n    TYPE y = 0x1p-53 + 0x1p-64;\n    TYPE z = x + y;\n\n    // Print the value of z\n    printf(\"z = %a\\n\", z);\n\n    return 0;\n}"
+    }
+  ],
+  "created": 1681916097,
+  "id": "cmpl-773Uvtg9ewgHpojNKEzQ9uV6xSx0O",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 255,
+    "prompt_tokens": 146,
+    "total_tokens": 401
+  }
+}

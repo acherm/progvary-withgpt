@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nThe float variant is the same as the double variant, but it uses the macro FLOAT instead of DOUBLE to conditionally include the relevant code. In this case, it will define the type myfloat as float and the program will use float instead of long double for the variables. Otherwise, the program will use long double."
+    }
+  ],
+  "created": 1681917379,
+  "id": "cmpl-773pbDRZGnCYDwKqsciakETKkNaGJ",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 69,
+    "prompt_tokens": 612,
+    "total_tokens": 681
+  }
+}

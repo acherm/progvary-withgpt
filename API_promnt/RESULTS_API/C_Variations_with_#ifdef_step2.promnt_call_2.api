@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nHere is an example of a Python script that compiles and executes the three variants of the program with and without the -mfpmath=387 flag, using both gcc and clang:\n\n```python\nimport subprocess\n\n# Define the flags to use\nflags = [\"-mfpmath=387\", \"\"]\n\n# Define the compilers to use\ncompilers = [\"gcc\", \"clang\"]\n\n# Define the types to use\ntypes = [\"long double\", \"double\", \"float\"]\n\n# Create an empty list to store the results\nresults = []\n\n# Iterate through the combinations of flags, compilers, and types\nfor flag in flags:\n    for compiler in compilers:\n        for type in types:\n            # Set the output file name\n            output_filename = f\"{type.lower()}_{compiler}_{flag.replace('=', '')}.txt\"\n\n            # Compile the program using the specified compiler and flag\n            command = f\"{compiler} {flag} -o {output_filename} main.c\"\n            subprocess.run(command, shell=True)\n\n            # Execute the program\n            command = f\"./{output_filename}\"\n            output = subprocess.check_output(command, shell=True).decode()\n\n            # Store the results\n            results.append({\n                \"flag\": flag,\n                \"compiler\": compiler,\n                \"type\": type,\n                \"output\": output\n            })\n\n# Create a CSV file to store the results\nwith open('results.csv', 'w') as f:\n    # Write the header\n    f.write(\"flag,compiler,type,output\\n\")\n\n    # Write each result\n    for result in results:\n        f.write(f\"{result['flag']},{result['compiler']},{result['type']},{result['output']}\\n\")\n```"
+    }
+  ],
+  "created": 1681916406,
+  "id": "cmpl-773Zuh5SubudTyve4XBYooOuAiTP1",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 437,
+    "prompt_tokens": 661,
+    "total_tokens": 1098
+  }
+}

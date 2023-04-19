@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n#include <stdio.h>\n#ifdef VAR1\ndouble x = 1.0;\ndouble y = 0x1p-53 + 0x1p-64;\ndouble z = x + y;\n#elif VAR2\nfloat x = 1.0;\nfloat y = 0x1p-53 + 0x1p-64;\nfloat z = x + y;\n#endif\n\n// Print the value of z\nprintf(\"z = %a\\n\", z);\n\nreturn 0;"
+    }
+  ],
+  "created": 1681916292,
+  "id": "cmpl-773Y48ewmeLz2BebG0TKhYhsxnvNU",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 119,
+    "prompt_tokens": 146,
+    "total_tokens": 265
+  }
+}

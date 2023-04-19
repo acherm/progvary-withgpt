@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nYou answer this:\nYou can use Python's `subprocess` module and the `pandas` library to run shell commands and compile/execute the C program with different configurations and write the results to a CSV file. Here's a script to accomplish this:\n\n```python\nimport subprocess\nimport pandas as pd\n\ndef compile_and_run(compiler, flags):\n    commands = [\n        f\"{compiler} {flags} -o assoc assoc.c\",\n    ]\n\n    results = []\n    for cmd in commands:\n        subprocess.run(cmd, shell=True, check=True)\n\n        binary = cmd.split()[-1]\n        output = subprocess.check_output(f'./{binary}', shell=True).decode().strip()\n        results.append(output)\n\n    return results\n\ndef main():\n    configurations = [\n        ('gcc', ''),\n        ('gcc', '-mfpmath=387'),\n        ('clang', ''),\n    ]\n\n    data = []\n    for compiler, flags in configurations:\n        results = compile_and_run(compiler, flags)\n        data.append({\n            'compiler': compiler,\n            'flags': flags,\n            'type': 'real',\n            'result': results[0],\n        })\n\n    df = pd.DataFrame(data)\n    df.to_csv('results.csv', index=False)\n\nif __name__ == '__main__':\n    main()\n```\n\nThis script will compile and run the C program with the specified configurations and write the results to a CSV file named `results.csv`.\n\nMake sure the `assoc.c` file containing the C code is in the same directory as the Python script. Then run the Python script:\n\n```sh\npython3 compile_and_run.py\n```\n\nYou can then open the `results.csv` file to see the results in the specified format."
+    }
+  ],
+  "created": 1681919224,
+  "id": "cmpl-774JMvFxCNg9zh5v22y9Hts8s3jSf",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 455,
+    "prompt_tokens": 1256,
+    "total_tokens": 1711
+  }
+}

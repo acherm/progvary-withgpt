@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n\nNo, there is not an equivalent of -mfpmath=387 for clang."
+    }
+  ],
+  "created": 1681915902,
+  "id": "cmpl-773RmmLYZtPENsgzeR1rWLKuRHBu1",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 21,
+    "prompt_tokens": 20,
+    "total_tokens": 41
+  }
+}

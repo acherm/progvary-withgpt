@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n\nNo, there is not an equivalent of -mfpmath=387 for Clang. Clang does not have an equivalent option for setting the FPU precision with the same level of granularity as -mfpmath=387."
+    }
+  ],
+  "created": 1681915649,
+  "id": "cmpl-773NhDVkulbZJqwXb4d1cIIH56kk1",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 51,
+    "prompt_tokens": 20,
+    "total_tokens": 71
+  }
+}

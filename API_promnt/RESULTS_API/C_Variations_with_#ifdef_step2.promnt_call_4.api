@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nHere is an example Python script that compiles/executes the three variants of the program with and without the -mfpmath=387 flag and with both GCC and Clang:\n\n```python\nimport os\nimport csv\n\n# Variables\nflags = [\"-DUSE_DOUBLE\", \"-DUSE_FLOAT\", \"\"]\nmfpmath = [\"-mfpmath=387\", \"\"]\ncompilers = [\"gcc\", \"clang\"]\n\n# Create a CSV file with the results\nwith open('results.csv', 'w', newline='') as csvfile:\n    writer = csv.writer(csvfile, delimiter=',')\n\n    # Write the header\n    writer.writerow([\"Flag\", \"mfpmath\", \"Compiler\", \"Output\"])\n\n    # Compile and execute the program for each configuration\n    for flag in flags:\n        for mfp in mfpmath:\n            for compiler in compilers:\n                # Compile the program\n                os.system(f\"{compiler} {mfp} -o program {flag} main.c\")\n\n                # Execute the program\n                output = os.popen(\"./program\").read().strip()\n\n                # Write the results to the CSV file\n                writer.writerow([flag, mfp, compiler, output])\n```"
+    }
+  ],
+  "created": 1681916499,
+  "id": "cmpl-773bPsQb45Oz8CLTR7xvaFp3n01x9",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 309,
+    "prompt_tokens": 661,
+    "total_tokens": 970
+  }
+}

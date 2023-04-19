@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nThe following Python script compiles and executes the three variants of the program, with and without the `-mfpmath=387` flag of GCC, as well as with Clang. It stores the configuration (flag, with or without `-mfpmath=387`, compiler) and the outputs in a CSV file.\n\n```python\nimport subprocess\n\n# Define the flags to be used\nflags = [\"-mfpmath=387\", \"\"]\n\n# Define the compilers to be used\ncompilers = [\"gcc\", \"clang\"]\n\n# Open and prepare the CSV file\nf = open(\"results.csv\", \"w\")\nf.write(\"Flag,Use_mfpmath,Compiler,Output\\n\")\n\n# Loop through the flags and compilers\nfor flag in flags:\n    for compiler in compilers:\n        # Compile the program with the given flag and compiler\n        command = \"{} {} -o main main.c\".format(compiler, flag)\n        subprocess.run(command, shell=True)\n\n        # Execute the program\n        output = subprocess.check_output(\"./main\", shell=True).decode('utf-8').strip()\n\n        # Write the configuration and output to the CSV file\n        f.write(\"{},{},{},{}\\n\".format(flag, flag != \"\", compiler, output))\n\n# Close the CSV file\nf.close()\n```"
+    }
+  ],
+  "created": 1681916590,
+  "id": "cmpl-773cs1Yn5JEM0eSwRU827tlG7Kn78",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 328,
+    "prompt_tokens": 661,
+    "total_tokens": 989
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nYou answer this:\nYou can use the `pandas` library to write the CSV file. Here's a modified version of the script that uses `pandas`:\n\n```python\nimport pandas as pd\nimport subprocess\n\ndef compile_and_run(compiler, flags):\n    commands = [\n        f\"{compiler} {flags} -o original assoc.c\",\n        f\"{compiler} {flags} -DUSE_DOUBLE -o double_variation assoc.c\",\n        f\"{compiler} {flags} -DUSE_FLOAT -o float_variation assoc.c\",\n    ]\n\n    results = []\n    for cmd in commands:\n        subprocess.run(cmd, shell=True, check=True)\n\n        binary = cmd.split()[-1]\n        output = subprocess.check_output(f'./{binary}', shell=True).decode().strip()\n        results.append(output)\n\n    return results\n\ndef main():\n    configurations = [\n        ('gcc', ''),\n        ('gcc', '-mfpmath=387'),\n        ('clang', ''),\n    ]\n\n    data = []\n    for compiler, flags in configurations:\n        results = compile_and_run(compiler, flags)\n        data.append({\n            'compiler': compiler,\n            'flags': flags,\n            'type': 'original',\n            'result': results[0],\n        })\n        data.append({\n            'compiler': compiler,\n            'flags': flags,\n            'type': 'double',\n            'result': results[1],\n        })\n        data.append({\n            'compiler': compiler,\n            'flags': flags,\n            'type': 'float',\n            'result': results[2],\n        })\n\n    df = pd.DataFrame(data, columns=['compiler', 'flags', 'type', 'result'])\n    df.to_csv('results.csv', index=False)\n\nif __name__ == '__main__':\n    main()\n```\n\nThis script will compile and run"
+    }
+  ],
+  "created": 1681919308,
+  "id": "cmpl-774KiCO8sIbiWnvkPsqmjZ3vT7UQW",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 500,
+    "prompt_tokens": 1256,
+    "total_tokens": 1756
+  }
+}

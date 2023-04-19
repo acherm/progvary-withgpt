@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nHere is an example Python script that can compile and execute the three variants of the program above with and without the -mfpmath=387 flag of GCC and with Clang:\n\n```py\nimport subprocess\nimport csv\n\n# Define the commands to be executed\ncmds = [\n    [\"gcc -o original main.c\", \"./original\"],\n    [\"gcc -DUSE_DOUBLE -o double_variation main.c\", \"./double_variation\"],\n    [\"gcc -DUSE_FLOAT -o float_variation main.c\", \"./float_variation\"],\n    [\"gcc -mfpmath=387 -o original_387 main.c\", \"./original_387\"],\n    [\"gcc -mfpmath=387 -DUSE_DOUBLE -o double_variation_387 main.c\", \"./double_variation_387\"],\n    [\"gcc -mfpmath=387 -DUSE_FLOAT -o float_variation_387 main.c\", \"./float_variation_387\"],\n    [\"clang -o original_clang main.c\", \"./original_clang\"],\n    [\"clang -DUSE_DOUBLE -o double_variation_clang main.c\", \"./double_variation_clang\"],\n    [\"clang -DUSE_FLOAT -o float_variation_clang main.c\", \"./float_variation_clang\"]\n]\n\n# Create a CSV to store the results\nwith open('variants_results.csv', 'w', newline='') as csvfile:\n    writer = csv.writer(csvfile, delimiter=',')\n    writer.writerow(['Configuration', 'Output'])\n\n    # Execute the commands and save the results\n    for cmd in cmds:\n        # Compile the program\n        output = subprocess.run(cmd[0], shell=True, capture_output=True)\n\n        # Execute the program and save the output\n        if output.returncode == 0:\n            output = subprocess.run(cmd[1], shell=True, capture_output=True)\n"
+    }
+  ],
+  "created": 1681916662,
+  "id": "cmpl-773e2EfyRDdcahvQt1x0LQ8aY9Z7a",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 500,
+    "prompt_tokens": 661,
+    "total_tokens": 1161
+  }
+}

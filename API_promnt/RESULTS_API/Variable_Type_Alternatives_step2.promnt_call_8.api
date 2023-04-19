@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nYes, you can further factor out the code using preprocessor macros. For example, you can define a macro that handles the variable declarations, and another macro that handles the `printf` statements. Here's an example:\n\n```c\n#include <stdio.h>\n\n// Define a macro to choose the type of variable\n// 1: float\n// 2: double\n// 3: long double\n#define VARIABLE_TYPE 3\n\n// Define a macro for variable declarations\n#define DECLARE_VARIABLES(type) \\\n    type x = 1.0; \\\n    type y = 0x1p-53 + 0x1p-64; \\\n    type z = x + y;\n\n// Define a macro for print statements\n#define PRINT_VALUE(type, format) \\\n    printf(\"z = \" format \"\\n\", z);\n\nint main() {\n    // Declare and initialize variables\n    #if VARIABLE_TYPE == 1\n        DECLARE_VARIABLES(float)\n    #elif VARIABLE_TYPE == 2\n        DECLARE_VARIABLES(double)\n    #elif VARIABLE_TYPE == 3\n        DECLARE_VARIABLES(long double)\n    #endif\n\n    // Print the value of z\n    #if VARIABLE_TYPE == 1\n        PRINT_VALUE(float, \"%a\")\n    #elif VARIABLE_TYPE == 2\n        PRINT_VALUE(double, \"%a\")\n    #elif VARIABLE_TYPE == 3\n        PRINT_VALUE(long double, \"%La\")\n    #endif\n\n    return 0;\n}\n```"
+    }
+  ],
+  "created": 1681915516,
+  "id": "cmpl-773LYcv3pufbGe0GfCkxznBb5UhqV",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 395,
+    "prompt_tokens": 673,
+    "total_tokens": 1068
+  }
+}

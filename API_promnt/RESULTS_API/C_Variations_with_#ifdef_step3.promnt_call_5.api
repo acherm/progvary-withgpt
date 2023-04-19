@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "logprobs": null,
+      "text": "\nYou answer this:\nYou can use Python's `pandas` module to write the CSV. Here's a script that compiles and runs the three variants of the C program with different configurations and writes the results to a CSV file named `results.csv`:\n\n```python\nimport subprocess\nimport pandas as pd\n\ndef compile_and_run(compiler, flags):\n    commands = [\n        f\"{compiler} {flags} -o original assoc.c\",\n        f\"{compiler} {flags} -DUSE_DOUBLE -o double_variation assoc.c\",\n        f\"{compiler} {flags} -DUSE_FLOAT -o float_variation assoc.c\",\n    ]\n\n    results = []\n    for cmd in commands:\n        subprocess.run(cmd, shell=True, check=True)\n\n        binary = cmd.split()[-1]\n        output = subprocess.check_output(f'./{binary}', shell=True).decode().strip()\n        results.append(output)\n\n    return results\n\ndef main():\n    configurations = [\n        ('gcc', ''),\n        ('gcc', '-mfpmath=387'),\n        ('clang', ''),\n    ]\n\n    df = pd.DataFrame(columns=['compiler', 'flags', 'type', 'result'])\n\n    for compiler, flags in configurations:\n        results = compile_and_run(compiler, flags)\n        df = df.append({\n            'compiler': compiler,\n            'flags': flags,\n            'type': 'original',\n            'result': results[0],\n        }, ignore_index=True)\n        df = df.append({\n            'compiler': compiler,\n            'flags': flags,\n            'type': 'double',\n            'result': results[1],\n        }, ignore_index=True)\n        df = df.append({\n            'compiler': compiler,\n            'flags': flags,\n            'type': 'float',\n            'result': results[2],\n        }, ignore_index=True)\n\n    df.to_csv"
+    }
+  ],
+  "created": 1681919178,
+  "id": "cmpl-774IcJfCw0vmWHxEFz6iS8luSejEz",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 500,
+    "prompt_tokens": 1256,
+    "total_tokens": 1756
+  }
+}

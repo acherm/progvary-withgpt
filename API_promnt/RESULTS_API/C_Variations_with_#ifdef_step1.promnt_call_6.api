@@ -1,0 +1,19 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "text": "\n\n#include <stdio.h>\n\n#ifdef USE_DOUBLE\n    typedef double real_t;\n#elif defined(USE_FLOAT)\n    typedef float real_t;\n#else\n    typedef long double real_t;\n#endif\n\nint main() {\n    // Declare and initialize variables\n    real_t x = 1.0;\n    real_t y = 0x1p-53 + 0x1p-64;\n    real_t z = x + y;\n\n    // Print the value of z\n    printf(\"z = %a\\n\", z);\n\n    return 0;\n}\n\nTo create the first variation with double, compile the program with:\n\ngcc -DUSE_DOUBLE program.c -o program\n\nTo create the second variation with float, compile the program with:\n\ngcc -DUSE_FLOAT program.c -o program"
+    }
+  ],
+  "created": 1681918247,
+  "id": "cmpl-7743brZI4V75AM4iLTrfINWCKYY3y",
+  "model": "text-davinci-003",
+  "object": "text_completion",
+  "usage": {
+    "completion_tokens": 215,
+    "prompt_tokens": 152,
+    "total_tokens": 367
+  }
+}
