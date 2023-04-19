@@ -143,7 +143,7 @@ We asked this:
 please use pandas for writing the CSV... also the fieldnames should be compiler, flags, type, and result. The C file to compile is assoc.c
 
 You answer this: 
-#### ChatGPT:
+
 Here's the updated Python script using `pandas` to write the CSV and the updated fieldnames. Also, it now assumes the C file to compile is named `assoc.c`:
 
 ```python

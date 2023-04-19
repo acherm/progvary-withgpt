@@ -80,7 +80,7 @@ write a Python script that compiles/executes the three variants above, with and 
 
 Then you answer this:
 
-#### ChatGPT:
+You answered::
 You can use Python's `subprocess` module to run shell commands and compile/execute the three variants of the C program with different configurations. Here's a script to accomplish this:
 
 ```python
