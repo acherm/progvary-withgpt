@@ -41,15 +41,14 @@ def generate_promnt(input_file,output_dir,i):
     destination_file.close()
     time.sleep(random.randint(20,40))
 
-def print_json(entry, outputdir, i):
-    json_file_path=os.path.join(outputdir,os.path.basename(entry)+'_r_'+str(i))
+def print_json(input_file, output_dir, i):
+    json_file_path=os.path.join(input_file)
     with open(json_file_path) as json_file:
         json_data = json.load(json_file)
         data_to_insert=json_data['choices'][0]['text']
-        #destinationFile = open(os.path.join(DESTINATION_DIR,str(x)+'_'+filename),'w')
-        #print(''.join(result), file = destinationFile)
-        #destinationFile.close()
-        print(data_to_insert)
+        destinationFile = open(output_dir+'/'+os.path.basename(input_file).replace(".api",".md"), 'w')
+        print(''.join(data_to_insert), file = destinationFile)
+        destinationFile.close()
 
 if not os.path.exists(outputdir):
    # Create a new directory because it does not exist
@@ -62,5 +61,5 @@ if not target_dir.exists():
 for entry in target_dir.iterdir():
     if entry.is_file():
         for i in range(numberofpromnts):
-            generate_promnt(entry, outputdir, i)
-            #print_json(entry,outputdir,i)
+            #generate_promnt(entry, outputdir, i)
+            print_json(entry,outputdir,i)
