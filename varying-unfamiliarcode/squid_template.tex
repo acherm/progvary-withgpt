@@ -1,0 +1,822 @@
+\documentclass[tikz,border=5]{standalone}
+\usepackage[prefix=]{xcolor-material}
+\pgfmathdeclarerandomlist{material}{%
+{Red}{Blue}{Green}}
+\tikzset{%
+  half clip/.code={
+    \clip (0, -256) rectangle (256, 256);
+  },
+  color/.code=\colorlet{fill color}{#1},
+  color alias/.code args={#1 as #2}{\colorlet{#1}{#2}},
+  colors alias/.style={color alias/.list/.expanded={#1}},
+  execute/.code={#1},
+  on left/.style={.. on left/.style={#1}},
+  on right/.style={.. on right/.style={#1}},
+  split/.style args={#1 and #2}{
+    on left ={color alias=fill color as #1},
+    on right={color alias=fill color as #2, half clip}
+  }
+}
+\newcommand\reflect[2][]{%
+\begin{scope}[#1]\foreach \side in {-1, 1}{\begin{scope}
+\ifnum\side=-1 \tikzset{.. on left/.try}\else\tikzset{.. on right/.try}\fi
+\begin{scope}[xscale=\side]#2\end{scope}
+\end{scope}}\end{scope}}
+
+\tikzset{%
+cat/.pic={
+\tikzset{x=3cm/5,y=3cm/5,shift={(0,-1/3)}}
+\useasboundingbox (-1,-1) (1,2);
+\fill [BlueGrey900] (0,-2)
+  .. controls ++(180:3) and ++(0:5/4) .. (-2,0)
+  arc (270:90:1/5)
+  .. controls ++(0:2) and ++(180:11/4) .. (0,-2+2/5);
+\foreach \i in {-1,1}
+  \scoped[shift={(1/2*\i,9/4)}, rotate=45*\i]{
+    \clip [overlay] (0, 5/9) ellipse [radius=8/9];
+    \clip [overlay] (0,-5/9) ellipse [radius=8/9];
+    \fill [BlueGrey900] ellipse [radius=1];
+    \clip [overlay] (0, 7/9) ellipse [radius=10/11];
+    \clip [overlay] (0,-7/9) ellipse [radius=10/11];
+    \fill [Purple100] ellipse [radius=1];
+  };
+\fill [BlueGrey900] ellipse [x radius=3/4, y radius=2];
+\fill [BlueGrey100] ellipse [x radius=1/3, y radius=1];
+\fill [BlueGrey900]
+  (0,15/8) ellipse [x radius=1, y radius=5/6]
+  (0, 8/6) ellipse [x radius=1/2, y radius=1/2]
+  {[shift={(-1/2,-2)}, rotate= 10]  ellipse [x radius=1/3, y radius=5/4]}
+  {[shift={( 1/2,-2)}, rotate=-10] ellipse [x radius=1/3, y radius=5/4]};
+\fill [BlueGrey500]
+  (-1/9,11/8) ellipse [x radius=1/5, y radius=1/5]
+  ( 1/9,11/8) ellipse [x radius=1/5, y radius=1/5];
+\fill [Purple100]
+  (0,12/8)     ellipse [x radius=1/10, y radius=1/5]
+  (0,12/8+1/9) ellipse [x radius=1/5 , y radius=1/10];
+\foreach \i in {-1,1}
+  \scoped[shift={(1/2*\i,2)}, rotate=35*\i]{
+    \clip [overlay] (0, 1/7) ellipse [radius=2/7];
+    \clip [overlay] (0,-1/7) ellipse [radius=2/7];
+    \fill [Yellow50] ellipse [radius=1];
+  };
+\scoped{
+  \clip (-1,-2) rectangle ++(2,1);
+  \fill [BlueGrey900] (0,-2) ellipse [radius=1/2];
+  \fill [Grey100]
+    (-1/2,-2) ellipse [x radius=1/3, y radius=1/4]
+    ( 1/2,-2) ellipse [x radius=1/3, y radius=1/4];
+};
+\foreach \i in {-1,1}
+  \foreach \j in {-1,0,1}
+    \fill [Grey100, shift={(0,11/8)}, xscale=\i, rotate=\j*15,
+      shift=(0:1/2)]
+      ellipse [x radius=1/3, y radius=1/64];
+},
+duck/.pic={
+\tikzset{x=3cm/100,y=3cm/100, shift={(-50,-50)}}
+\fill [Amber800] (58,28)
+  .. controls (56,28) and (55,27) .. (55,26)
+  .. controls (55,25) and (56,16) .. (55,15)
+  .. controls (54,14) and (54,12) .. (55,11)
+  .. controls (56,10) and (66, 7) .. (68, 7)
+  .. controls (70, 7) and (75,15) .. (73,15)
+  .. controls (71,15) and (62,13) .. (60,15)
+  .. controls (58,17) and (60,25) .. (60,26)
+  .. controls (60,27) and (59,28) .. (58,28)
+  -- cycle;
+\fill [BlueGrey900] (1,57)
+  .. controls ( 0,51) and ( 4,44) .. (10,42)
+  .. controls (16,40) and (23,40) .. (24,47)
+  -- cycle;
+\begin{scope}
+\clip [preaction={fill=LightGreen}] (74,96)
+  .. controls (66,96) and (62,92) .. (60,88)
+  .. controls (58,84) and (58,76) .. (61,68)
+  -- (76,68)
+  .. controls (72,72) and (74,74) .. (75,75)
+  .. controls (82,75) and (88,76) .. (88,84)
+  .. controls (88,92) and (82,96) .. (74,96)
+  -- cycle;
+\fill [Grey100] (57,68) rectangle +(20,4);
+\end{scope}
+\fill [BlueGrey50]
+  (14,48)
+  .. controls (14,34) and (32,21) .. (53,21)
+  .. controls (55,21) and (57,21) .. (61,22)
+  .. controls (81,27) and (92,36) .. (92,48)
+  -- cycle;
+\fill [Brown500] (61,68)
+  .. controls (65,52) and (68,40) .. (61,22)
+  .. controls (84,26) and (92,36) .. (92,48)
+  .. controls (92,60) and (82,65) .. (76,68)
+  -- cycle;
+\fill [BlueGrey400] (56,64)
+  .. controls (45,64) and (40,60) .. (32,56)
+  .. controls (24,52) and ( 8,52) .. ( 8,48)
+  .. controls (8, 44) and (24,36) .. (40,36)
+  .. controls (56,36) and (68,44) .. (72,48)
+  .. controls (76,52) and (72,56) .. (68,60)
+  .. controls (64,64) and (60,64) .. (56,64)
+  -- cycle;
+\fill [Amber500] (88,84)
+  .. controls (86,84) and ( 87,82) .. (86,81)
+  .. controls (85,80) and ( 80,79) .. (83,76)
+  .. controls (86,73) and ( 95,71) .. (97,71)
+  .. controls (99,71) and (100,72) .. (99,73)
+  .. controls (98,74) and ( 92,77) .. (91,80)
+  .. controls (90,83) and ( 90,84) .. (88,84)
+  -- cycle;
+\fill (78,87)
+  .. controls (77,85) and (80,82) .. (83,84)
+  .. controls (83,87) and (80,88) .. (78,87)
+  -- cycle;
+\fill [Amber700] (50,25)
+  .. controls (48,25) and (47,24) .. (47,23)
+  .. controls (47,22) and (48,13) .. (47,12)
+  .. controls (46,11) and (46, 9) .. (47, 8)
+  .. controls (48, 7) and (58, 4) .. (60, 4)
+  .. controls (62, 4) and (67,12) .. (65,12)
+  .. controls (63,12) and (54,10) .. (52,12)
+  .. controls (50,14) and (52,22) .. (52,23)
+  .. controls (52,24) and (51,25) .. (50,25)
+  -- cycle;},
+horse/.pic={
+\begin{scope}[x=3cm/448,y=3cm/448]
+\fill [Brown200]
+  (-128,128)
+  to [bend left]  ++(-16,-128) to [bend right] ++( 32,  8)
+  to [bend left]  ++(-48, -96) to [bend right] ++( 56,   8)
+  to [bend left]  ++(-64, -96) to [bend right]   (  0, -96)
+  (128,128)
+  to [bend left] ++(32,-128) to [bend right] ++(-40,40)
+  to [bend left] ++( 0, -96) to [bend right] ++(-64,96);
+\reflect[
+  on left ={color alias=ears as Brown600},
+  on right={color alias=ears as Brown700},
+  color 0/.style={ears}, color 1/.style={BlueGrey900}
+]{
+  \foreach \j in {0, 1}
+  \fill [color \j]
+  [shift={(96,120)}, rotate=45, scale=9/10-\j/3, xscale=9/10]
+  (-72,0)
+  .. controls ++( 90: 8) and ++(180:16) .. ( 0, 48)
+  .. controls ++(  0:16) and ++( 90:12) .. (88,  0)
+  .. controls ++(270:12) and ++(  0: 8) .. ( 0,-48)
+  .. controls ++(180: 8) and ++(270: 8) .. cycle;
+}
+\reflect[split=Brown600 and Brown700]{%
+  \fill [fill color] (-56,-160)
+  .. controls ++( 90:176) and ++(270: 96) .. (-112,  64)
+  arc (180:0: 112 and 112)
+  .. controls ++(270: 96) and ++( 90:176) .. (  56,-160) -- cycle;
+}
+\reflect[split=Grey50 and Grey200]{%
+  \fill [fill color] (0,-48)
+    .. controls ++(135:48) and ++(225:48) .. (0,168)
+    .. controls ++(315:48) and ++( 45:48) .. cycle;
+}
+
+\reflect[split=Brown50 and Brown100]{%
+  \fill [fill color] (0,-164) ellipse [x radius=56, y radius=56];
+}
+\reflect[split=Brown200 and Brown300]{%
+  \fill [fill color] (0,-164) ellipse [x radius=48, y radius=40];
+}
+\reflect[split=Brown50 and Brown100]{%
+  \fill [fill color] (0,-144) ellipse [x radius=64, y radius=48];
+}
+\reflect[split=Brown50 and Brown100]{
+  \fill [fill color]  (36, -128) ellipse [x radius=24, y radius=40];
+  \fill [BlueGrey900] (36, -128) ellipse [x radius=12, y radius=24];
+}
+\fill [BlueGrey900]
+  (-72, 64) ellipse [radius=20]
+  ( 72, 64) ellipse [radius=20];
+\fill [Brown200]
+  (0,192)
+  .. controls ++(180:64) and ++( 90:64) .. (-128, 64)
+  .. controls ++( 60:16) and ++(180:16) .. ( -64,128)
+   to [bend left]  (-80,88)
+   to [bend right] (  0, 128)
+   to [bend left]  (-16,  64)
+   .. controls ++( 0:64) and ++(270:32) .. (96,144)
+   .. controls ++(90:32) and ++(  0:64) .. cycle;
+\end{scope}},
+chimpanzee/.pic={
+\tikzset{x=3cm/3.5,y=3cm/3.5, shift={(0,1/4)}}
+\fill [BlueGrey700] (165:5/4 and 1) ellipse [radius=1/2];
+\fill [Pink100]     (165:5/4 and 1) ellipse [radius=1/3];
+\fill [BlueGrey700]
+  (0,-1/2) ellipse [x radius=1, y radius=4/3]
+  (0,   0) ellipse [x radius=4/3, y radius=1];
+\scoped{
+  \clip(0,-2) rectangle(9/5,1);
+  \fill [BlueGrey900] (15:5/4 and 1) ellipse [radius=1/2];
+  \fill [Pink200]     (15:5/4 and 1) ellipse [radius=1/3];
+  \fill [BlueGrey900]
+    (0,-1/2) ellipse [x radius=1, y radius=4/3]
+    (0,   0) ellipse [x radius=4/3, y radius=1];
+}
+\fill [Pink100]            (  0,-2/3) ellipse [x radius=5/6, y radius=  1];
+\fill [Pink100, xscale=-1] (1/2,   0) ellipse [x radius=3/5, y radius=2/3];
+\fill [Pink100, xscale= 1] (1/2,   0) ellipse [x radius=3/5, y radius=2/3];
+\scoped{
+  \clip(0,-2) rectangle(9/5,1);
+  \fill [Pink200]            (  0,-2/3) ellipse [x radius=5/6, y radius=  1];
+  \fill [Pink200, xscale=-1] (1/2,   0) ellipse [x radius=3/5, y radius=2/3];
+  \fill [Pink200, xscale= 1] (1/2,   0) ellipse [x radius=3/5, y radius=2/3];
+}
+\foreach \i in {-1,1}
+  \fill [BlueGrey900, xscale=\i] (1/2,0) ellipse [radius=1/4];
+\fill [Pink300]
+  (-1/7,-2/3) ellipse [radius=1/9]
+  ( 1/7,-2/3) ellipse [radius=1/9];
+\fill [Pink300]
+  (-1/2,-1) arc (180:360:1/2 and 1/8) arc (360:180:1/2 and 1/4);
+},
+shark/.pic={
+\tikzset{x=3cm/22,y=3cm/22,shift={(-8,-11)}}
+\fill [BlueGrey200]
+  (2,16.75) -- ++(0.5,-1) -- ++(0.5,1) -- cycle
+  (3,16.25) -- ++(0.5,-1) -- ++(0.5,1) -- cycle
+  (1,17)    -- ++(0.5,-1) -- ++(0.5,1) -- cycle
+  (2,15.5)  -- ++(-.5,-1) -- ++(1,0) -- cycle
+  (3,15)    -- ++(-.5,-1) -- ++(1,0) -- cycle;
+\fill [BlueGrey700] (6,12)
+  .. controls (5,11) and (5,8)  .. (6,7)
+  .. controls (7,8)  and (7,9)  .. (8,10)
+  .. controls (8,11) and (7,12) .. (6,12)-- cycle;
+\fill [BlueGrey500] (0,20)
+  .. controls (0,19)  and (0,18)  .. (1,17)
+  .. controls (3,16)  and (4,16)  .. (4,15)
+  .. controls (4,14)  and (2,15)  .. (1,15)
+  .. controls (2,13)  and (3,12)  .. (5,10)
+  .. controls (7,8)   and (11,6)  .. (14,5)
+  .. controls (14,3)  and (14,1)  .. (15,0)
+  .. controls (15,2)  and (15,3)  .. (16,4)
+  .. controls (17,5)  and (18,6)  .. (20,6)
+  .. controls (19,7)  and (16,7)  .. (15,6)
+  .. controls (14,10) and (11,15) .. (9,17)
+  .. controls (7,19)  and (3,20)  .. (0,20) -- cycle;
+\fill [BlueGrey100] (0,20)
+  .. controls (0,19) and (0,18) .. (1,17)
+  .. controls (3,16) and (4,16) .. (4,15)
+  .. controls (4,14) and (2,15) .. (1,15)
+  .. controls (2,13) and (3,12) .. (5,10)
+  .. controls (7,8)  and (11,6) .. (14,5)
+  .. controls (13,8) and (7,8)  .. (6,12)
+  .. controls (5,16) and (2,19) .. (0,20) -- cycle;
+\fill [BlueGrey500] (3,13)
+  .. controls (2,12) and (2,9)  .. (3,8)
+  .. controls (4,9)  and (4,10) .. (5,11)
+  .. controls (5,12) and (4,13) .. (3,13) -- cycle;
+\fill [BlueGrey500] (9,18)
+  .. controls (8,18)  and (7.5,17.5) .. (7,17)
+  .. controls (7,16)  and (9,14)     .. (10,14)
+  .. controls (10,15) and (11,17)    .. (12,17)
+  .. controls (11,18) and (10,18)    .. (9,18) -- cycle;
+\fill [BlueGrey800] (6,17.5) circle [radius=0.5];
+},
+squid/.pic={
+\begin{scope}[x=3cm/480,y=3cm/480]
+\useasboundingbox (-256, -256) (256, 256);
+\reflect[split={DeepOrange500 and DeepOrange700}]{
+  \fill [fill color] (0,96) ellipse [x radius=96, y radius=128];
+  \fill [fill color]
+    (72,-16)
+    .. controls ++(270:72) and ++(270:40) .. ++(108,  -16)
+    .. controls ++( 90:64) and ++(270:64) .. ++(-40,128)
+    .. controls ++( 90:32) and ++(270:32) .. ++( 40, 96)
+    arc (180:0:4)
+    .. controls ++(270: 32) and ++( 90: 32) .. ++(-24, -96)
+    .. controls ++(270: 64) and ++( 90: 64) .. ++( 56,-128)
+    .. controls ++(270:128) and ++(270:160) ..   (  0, -16);
+  \fill [fill color]  (64, 16) circle [radius=48];
+  \fill [Grey50]      (64, 16) circle [radius=32];
+  \fill [BlueGrey900] (64, 16) circle [radius=12];
+  \fill [fill color]  (-4, -20)
+    .. controls ++(270:256) and ++(225: 64) .. (128,-192)
+    arc (315:495:4)
+    .. controls ++(210: 64) and ++(270:192) .. (48, -40);
+}
+\fill [DeepOrange900]
+  (-40,-40) arc (180:360:40 and 16) arc (360:180:40 and 40);
+\fill [DeepOrange300]
+  (-32,108) circle [radius=16] (-40,160) circle [radius=12]
+  (-20,196) circle [radius= 8]  ( 40,160) circle [radius=16]
+  ( 64,120) circle [radius= 8]  ( 40,100) circle [radius=12];
+\end{scope}
+},
+squidt/.pic={
+\begin{scope}[x=3cm/480,y=3cm/480]
+\useasboundingbox (-256, -256) (256, 256);
+\reflect[split={DeepOrange500 and DeepOrange700}]{
+  (% if agressive_shading %)
+  \fill [left color=fill color, right color=fill color!40!black, middle color=fill color!70!black] (0,96) ellipse [x radius=96, y radius=128]; %%%% Replace the solid color fill for the body with a radial shading
+  (% else %)
+  \fill [fill color] (0,96) ellipse [x radius=96, y radius=128];
+  (% endif %)
+  % \fill [fill color] (0,96) ellipse [x radius=96, y radius=128];
+%  \fill [fill color] (0,96) ellipse [x radius=96, y radius=128];
+  (% if crazy_tentacles  %)  
+  (% if agressive_shading %)
+  \path [left color=fill color, right color=fill color!40!black, middle color=fill color!70!black, shading angle=90] %%%% Replace the solid color fill for the tentacles with a path shading
+  (% else %)
+  \fill [fill color]
+  (% endif %)
+    (72,-16)
+    .. controls ++(270:100) and ++(270:70) .. ++(108,  -16)
+    .. controls ++( 90:100) and ++(270:100) .. ++(-40,180)
+    .. controls ++( 90:60) and ++(270:60) .. ++( 40, 110)
+    arc (180:0:4)
+    .. controls ++(270: 50) and ++( 90: 50) .. ++(-24, -120)
+    .. controls ++(270: 100) and ++( 90: 100) .. ++( 56,-160)
+    .. controls ++(270:180) and ++(270:220) ..   (  0, -16);
+  (% endif %)
+  (% if original_tentacles %) %%%% original tentacles
+  (% if agressive_shading %)
+  \path [left color=fill color, right color=fill color!40!black, middle color=fill color!70!black, shading angle=90] %%%% Replace the solid color fill for the tentacles with a path shading
+  (% else %)
+  \fill [fill color]
+  (% endif %)
+    (72,-16)
+    .. controls ++(270:72) and ++(270:40) .. ++(108,  -16)
+    .. controls ++( 90:64) and ++(270:64) .. ++(-40,128)
+    .. controls ++( 90:32) and ++(270:32) .. ++( 40, 96)
+    arc (180:0:4)
+    .. controls ++(270: 32) and ++( 90: 32) .. ++(-24, -96)
+    .. controls ++(270: 64) and ++( 90: 64) .. ++( 56,-128)
+    .. controls ++(270:128) and ++(270:160) ..   (  0, -16);
+  (% endif %)
+  
+
+  \fill [fill color]  (64, 16) circle [radius=48];
+  \fill [(( outer_eye_color ))] (64, 16) circle [radius=32];
+  \fill [(( inner_eye_color ))] (64, 16) circle [radius=12];
+  % \fill [Grey50]      (64, 16) circle [radius=32];
+  % \fill [BlueGrey900] (64, 16) circle [radius=12];
+  \fill [fill color]  (-4, -20)
+    .. controls ++(270:256) and ++(225: 64) .. (128,-192)
+    arc (315:495:4)
+    .. controls ++(210: 64) and ++(270:192) .. (48, -40);
+}
+
+(% if prominent_mouth %)
+\fill [DeepOrange900] (-40,-40) arc (150:390:40 and 20) arc (390:150:40 and 50);
+  (% else %) %%%% original mouth
+  \fill [DeepOrange900]
+  (-40,-40) arc (180:360:40 and 16) arc (360:180:40 and 40);  
+(% endif %)
+
+
+  % Spots
+% \fill [DeepOrange300]
+(% for spot in spots %)
+  (\fill [ (( spot.color )) ] ( (( spot.x )), (( spot.y )) ) circle [radius=(( spot.radius ))] ; 
+(% endfor %)
+% \fill [DeepOrange300]
+%  (-32,108) circle [radius=16] (-40,160) circle [radius=12]
+%  (-20,196) circle [radius= 8]  ( 40,160) circle [radius=16]
+%  ( 64,120) circle [radius= 8]  ( 40,100) circle [radius=12];
+\end{scope}
+},
+squid2/.pic={
+\begin{scope}[x=3cm/480,y=3cm/480]
+\useasboundingbox (-256, -256) (256, 256);
+\reflect[split={DeepOrange500 and DeepOrange700}]{
+  % BODY \fill [fill color] (0,96) ellipse [x radius=96, y radius=128];
+  \fill [left color=fill color, right color=fill color!40!black, middle color=fill color!70!black] (0,96) ellipse [x radius=96, y radius=128]; %%%% Replace the solid color fill for the body with a radial shading
+
+  %%%%% TENTACLES 
+  %%%% The original code block for the tentacles is:
+  \fill [fill color]
+    (72,-16)
+    .. controls ++(270:72) and ++(270:40) .. ++(108,  -16)
+    .. controls ++( 90:64) and ++(270:64) .. ++(-40,128)
+    .. controls ++( 90:32) and ++(270:32) .. ++( 40, 96)
+    arc (180:0:4)
+    .. controls ++(270: 32) and ++( 90: 32) .. ++(-24, -96)
+    .. controls ++(270: 64) and ++( 90: 64) .. ++( 56,-128)
+    .. controls ++(270:128) and ++(270:160) ..   (  0, -16);
+ %%%%% You can modify the control points in the controls and arc commands to create more exaggerated or intricate tentacle shapes.
+ %%%% eg 
+  %\fill [fill color] %%% original 
+   \path [left color=fill color, right color=fill color!40!black, middle color=fill color!70!black, shading angle=90] %%%% Replace the solid color fill for the tentacles with a path shading
+    (72,-16)
+    .. controls ++(270:100) and ++(270:70) .. ++(108,  -16)
+    .. controls ++( 90:100) and ++(270:100) .. ++(-40,180)
+    .. controls ++( 90:60) and ++(270:60) .. ++( 40, 110)
+    arc (180:0:4)
+    .. controls ++(270: 50) and ++( 90: 50) .. ++(-24, -120)
+    .. controls ++(270: 100) and ++( 90: 100) .. ++( 56,-160)
+    .. controls ++(270:180) and ++(270:220) ..   (  0, -16);
+  \fill [fill color]  (64, 16) circle [radius=48];
+  %%% EYE
+  %% original
+  % \fill [Grey50]      (64, 16) circle [radius=32];
+  % \fill [BlueGrey900] (64, 16) circle [radius=12];
+  %% blue
+  \fill [blue] (64, 16) circle [radius=32];
+  \fill [blue!60!white] (64, 16) circle [radius=12];
+  %%%% end EYE
+  \fill [fill color]  (-4, -20)
+    .. controls ++(270:256) and ++(225: 64) .. (128,-192)
+    arc (315:495:4)
+    .. controls ++(210: 64) and ++(270:192) .. (48, -40);
+}
+%\fill [DeepOrange900]
+%  (-40,-40) arc (180:360:40 and 16) arc (360:180:40 and 40);
+%%%%% To create a more prominent mouth, you can adjust the radii and angles of the arcs. Here's an example with a more exaggerated mouth shape:
+\fill [DeepOrange900] (-40,-40) arc (150:390:40 and 20) arc (390:150:40 and 50);
+
+  %%%% SPOTS
+  %%% To add more spots to the squid, you can modify the fill command that creates the spots. The original line is:
+%\fill [DeepOrange300]
+%  (-32,108) circle [radius=16] (-40,160) circle [radius=12]
+%  (-20,196) circle [radius= 8]  ( 40,160) circle [radius=16]
+ % ( 64,120) circle [radius= 8]  ( 40,100) circle [radius=12];
+ %%%%%% You can add more circle commands with different coordinates and radii to create more spots. Here's an example with additional spots:
+ \fill [DeepOrange300] 
+(-32,108) 
+circle [radius=16] (-40,160) circle [radius=12] (-20,196) circle [radius= 8]  ( 40,160) circle [radius=16] ( 64,120) circle [radius= 8]  ( 40,100) circle [radius=12] (0,130) circle [radius=10] (-60,120) circle [radius=14] (20,200) circle [radius=6];
+
+\end{scope}
+},
+owl/.pic={
+\begin{scope}[x=3cm/512,y=3cm/512]
+\foreach \i in {-3,...,3}
+  \fill [Brown900, shift={(0,128)}, rotate=-\i*13]
+    (0,0) arc (90:450:48 and 144);
+\foreach \i in {-1,...,1}
+  \fill [Brown900, shift={(0,32)}, rotate=-\i*10]
+    (0,0) arc (90:450:32 and 128);
+\reflect[split={Brown700 and Brown800}]{
+  \fill [fill color] (0,224)
+  .. controls ++(180:96) and ++( 90:96) .. (-112,32)
+  .. controls ++(270:96) and ++(180: 0) .. (0,-148)
+  .. controls ++(  0: 0) and ++(270:96) .. ( 112,32)
+  .. controls ++( 90:96) and ++(  0:96) .. cycle;
+}
+\reflect[
+  on left ={colors alias={
+    outer eye as Brown600, eyebrow as Brown800, chest as Brown100}},
+  on right={colors alias={
+    outer eye as Brown700, eyebrow as Brown900, chest as Brown200},
+    half clip}]{
+  \fill [outer eye]   (64, 128) circle [radius=80];
+  \fill [Grey100]     (64, 128) circle [radius=40];
+  \fill [BlueGrey900] (64, 128) circle [radius=20];
+  \fill [eyebrow]  (0,112)
+    .. controls ++( 90:128) and ++(270:64) .. (160,240)
+    .. controls ++(270:112) and ++( 90:64) .. cycle;
+  \fill [chest] 
+    (0,-140)
+    .. controls ++(135:32) and ++(270:32) .. (-64,-40)
+    arc (180:0:64)
+    .. controls ++(270:32) and ++( 45:32) .. cycle;
+}
+\reflect[
+  on left ={colors alias={
+    beak as Amber500, perch as BlueGrey800, foot as Brown600, 
+    talon as Amber500}},
+  on right={colors alias={
+    beak as Amber700, perch as BlueGrey900, foot as Brown700, 
+      talon as Amber700}, half clip}]{
+  \fill [beak] (0,28)
+    .. controls ++(135:32) and ++(270:16) .. (-32,64)
+    arc (180:0:32)
+    .. controls ++(270:16) and ++(45:32) .. cycle;
+  \fill [perch]
+    (-192,-128) arc (90:270:12) -- ++(384,0) arc (270:450:12) -- cycle;
+  \tikzset{shift={(0, -128)}}
+  \fill [foot]
+    (3, 0) arc (180:0:36 and 24) -- cycle;
+  \foreach \j in {-1,0,1}
+    \scoped[shift={(40+20*\j,0)}]\fill [talon]
+       (10,0) arc (0:180:10) -- (0,-16) -- cycle;
+}
+\end{scope}},
+cow/.pic={
+\begin{scope}[x=3cm/480,y=3cm/480]
+\reflect[]{
+\tikzset{shift={(32,140)}, rotate=-45}
+  \fill [BlueGrey100] (0,0) arc (0:90:32 and 96) arc (90:0:96);
+  \fill [BlueGrey200] (32,0) arc (0:90:64 and 96) arc (90:0:96);
+}
+\foreach \i in {-1, 1}\foreach \j in {0, 1}
+\fill \ifnum\j=0 \ifnum \i=-1 [BlueGrey700] \else [BlueGrey800] \fi\else [BlueGrey900] \fi
+  [xscale=\i, shift={(128,88)}, rotate=10, scale=1-\j/3]
+  (-72,0)
+  .. controls ++( 90: 8) and ++(180:16) .. ( 0, 48)
+  .. controls ++(  0:16) and ++( 90:12) .. (88,  0)
+  .. controls ++(270:12) and ++(  0: 8) .. ( 0,-48)
+  .. controls ++(180: 8) and ++(270: 8) .. cycle;
+\reflect[split={BlueGrey700 and BlueGrey800}]{%
+  \fill [fill color] (-64,-160)
+  .. controls ++( 90:144) and ++(270: 64) .. (-120,  64)
+  arc (180:0: 120 and 112)
+  .. controls ++(270: 64) and ++( 90:144) .. (  64,-160) -- cycle;
+}
+\reflect[split=Grey50 and Grey200]{%
+  \fill [fill color](-64,-160)
+    .. controls ++( 75:144) and ++(270: 64) .. (-16,  64)
+    .. controls ++( 90: 32) and ++(180: 72) .. (  0, 168)
+    .. controls ++(  0: 72) and ++( 90: 32) .. ( 16,  64)
+    .. controls ++(270: 64) and ++(105:144) .. ( 64,-160) -- cycle;
+}
+\reflect[split=Pink100 and Pink200]{
+  \fill [fill color] (0,-160) ellipse [x radius=64, y radius=56];
+}
+\fill [Pink300] (0, -160) ellipse [x radius=48, y radius=40];
+\reflect[split=Pink100 and Pink200]{
+  \fill [fill color] (0,-128) ellipse [x radius=80, y radius=56];
+}
+\fill [Pink300]
+  (-32, -128) ellipse [radius=16]
+  ( 32, -128) ellipse [radius=16];
+\fill [BlueGrey900]
+  (-64, 64) ellipse [radius=24]
+  ( 64, 64) ellipse [radius=24];
+\end{scope}
+},
+bee/.pic={
+\begin{scope}[x=3cm/480,y=3cm/480, rotate=-45, shift=(270:48)]
+\reflect[
+  on left= {colors alias={body as BlueGrey800, stripes as Amber500}},
+  on right={colors alias={body as BlueGrey900, stripes as Amber700}, half clip},
+  lower wing/.style={fill=BlueGrey100}, upper wing/.style={fill=BlueGrey50}]{
+  \fill [body] (0,-160)
+    .. controls ++(120:64) and ++(270:64) .. (-88, -16)
+    .. controls ++( 90:64) and ++(225:64) .. (  0, 128)
+    .. controls ++(315:64) and ++( 90:64) .. ( 88, -16)
+    .. controls ++(270:64) and ++( 60:64) .. cycle;
+  \fill [body] (0,128) ellipse [x radius=80, y radius=56];
+  \fill [body]
+    (32,160) arc (180:90:64) -- ++(6,-6) coordinate [midway] (@)
+    arc (90:180:64) -- cycle;
+  \fill [body] (@) circle [radius=12];
+  \begin{scope}
+    \clip (0,-160)
+      .. controls ++(120:64) and ++(270:64) .. (-88, -16)
+      .. controls ++( 90:64) and ++(225:64) .. (  0, 128)
+      .. controls ++(315:64) and ++( 90:64) .. ( 88, -16)
+      .. controls ++(270:64) and ++( 60:64) .. cycle;
+    \foreach \i in {0,...,2}
+      \fill [stripes] (-256, -160 + \i*80) rectangle ++(512, 40);
+  \end{scope}
+  \foreach \s [count=\i from -1] in {lower wing, upper wing}
+    \fill [style=\s, shift={(16,56)}, rotate=\i*32]
+      (0,0)
+      .. controls ++( 30:64) and ++(180:32) .. (128,56)
+      arc (90:-90:56)
+      .. controls ++(180:32) and ++(330:64) .. cycle;
+}
+\end{scope}},
+monkey/.pic={%
+\begin{scope}[x=3cm/448,y=3cm/448]
+\useasboundingbox (-256, -256) (256, 256);
+\reflect[
+  on left ={ color alias/.list={skin as Brown700, ears as Pink100}},
+  on right={ color alias/.list={skin as Brown900, ears as Pink200}, half clip }
+]{
+  \fill [skin] (140, 80) circle  [radius=56];
+  \fill [ears] (140, 80) circle  [radius=32];
+  \fill [skin] (  0, 72) ellipse [x radius=140, y radius=112];
+  \fill [skin] (  0,-64) ellipse [x radius=172, y radius=112];
+}
+\reflect[
+  on left ={color alias/.list={face as Pink100}},
+  on right={color alias/.list={face as Pink200}, half clip}
+  ]{
+  \fill [face] (0,-64) ellipse [x radius=140, y radius=88];
+  \fill [face] (40,64) ellipse [radius=64];
+}
+\reflect{
+  \fill [BlueGrey900] (40, 64) circle [radius=24];
+  \fill [Pink300]     (24,-16) circle [radius=16];
+}
+\fill [Pink300]
+  (-96,-72) arc (180:360:96 and 32) arc (360:180:96 and 56);
+\end{scope}},
+donkey/.pic={
+\begin{scope}[x=3cm/480,y=3cm/480]
+\reflect[
+  on left ={color alias=ears as BlueGrey500},
+  on right={color alias=ears as BlueGrey700},
+  outer ear/.style={fill=ears}, inner ear/.style={fill=BlueGrey900}
+]{
+  \foreach \s [count=\j from 0] in {outer ear, inner ear}
+  \fill [style=\s]
+  [shift={(88,120)}, rotate=75, scale=9/10-\j/3, xscale=3/2]
+  (-72,0)
+  .. controls ++( 90: 8) and ++(180:16) .. ( 0, 48)
+  .. controls ++(  0:16) and ++( 90:12) .. (88,  0)
+  .. controls ++(270:12) and ++(  0: 8) .. ( 0,-48)
+  .. controls ++(180: 8) and ++(270: 8) .. cycle;
+}
+\reflect[split=BlueGrey500 and BlueGrey700]{%
+  \fill [fill color] (-56,-160)
+  .. controls ++( 90:112) and ++(270: 128) .. (-112,  48)
+  arc (180:0:112 and 96)
+  .. controls ++(270: 128) and ++( 90:112) .. (  56,-160) -- cycle;
+}
+\reflect[split=Grey500 and Grey600]{%
+  \fill [fill color] (0,-164) ellipse [x radius=56, y radius=56];
+}
+\reflect[split=Grey700 and Grey800]{%
+  \fill [fill color] (0,-164) ellipse [x radius=48, y radius=40];
+}
+\reflect[split=Grey500 and Grey600]{%
+  \fill [fill color] (0,-144) ellipse [x radius=64, y radius=48];
+  \fill [fill color]  (36, -128) ellipse [x radius=24, y radius=40];
+  \fill [BlueGrey900] (36, -128) ellipse [x radius=12, y radius=24];
+}
+\fill [BlueGrey900]
+  (-72, 40) ellipse [radius=20]
+  ( 72, 40) ellipse [radius=20]
+  (-8,160)
+  to [bend left]  ++( 16, 32) to [bend right] ++( 16,-48)
+  to [bend left]  ++( 16, 32) to [bend right] ++( 16,-48)
+  to [bend right] ++(-32,-48) to [bend left]  ++(-16, 32)
+  to [bend right] ++(-32,-32) to [bend left]  ++(  0, 32)
+  to [bend right] ++(-32,-16) to [bend left]  ++( 16, 40)
+  to [bend right] ++(-16, 32) to [bend left]  cycle;
+\end{scope}},
+chipmunk/.pic={
+\begin{scope}[x=3cm/448,y=3cm/448]
+\reflect[
+  on left ={colors alias={fur as Brown500, ear as Pink100}},
+  on right={colors alias={fur as Brown700, ear as Pink200}, half clip}
+]{
+  \begin{scope}[shift={(88,56)}, rotate=-10]
+  \fill [fur] (0,0) arc (270:90:40 and 64) arc (90:-90:24 and 64);
+  \fill [ear] (0,0) arc (270:90:32 and 48) arc (90:-90:16 and 48);
+  \end{scope}
+  \fill [fur] ( 0,  -8) ellipse [x radius=128, y radius=176];
+  \fill [fur] (96,-72) ellipse [x radius= 96, y radius= 88];
+}
+\reflect[split={Grey300 and Grey400}]{
+  \fill [fill color, shift={(72,-80)}, yscale=-1] (-96,0) 
+  arc (180:270: 96 and 80) arc (270:360:112 and 88)
+  to [bend left ] ++(-20,-8) 
+  to [bend right] ++(12,32)
+  to [bend left ] (30:96 and 80)
+  arc (30:180:96 and 80) -- cycle;
+  \fill [fill color] (56,16) [rotate=-5] ellipse [x radius=48, y radius=96];
+}
+\reflect[split={Brown100 and Brown200}]{
+  \fill [Grey100] (4,-56) -- ++(0,-64) -- ++(24,0) -- ++(16,64) -- cycle;
+  \fill [fill color] (0,-40) ellipse [x radius=80, y radius=48];
+  \fill [fill color] (0,-48) ellipse [x radius=64, y radius=56];
+}
+\reflect[split={BlueGrey800 and BlueGrey900}]{
+  \fill [fill color]
+    (0,-56) 
+    .. controls ++(  0:16) and ++(315:16) .. ( 36,0)
+    .. controls ++(135:16) and ++( 45:16) .. (-36,0)
+    .. controls ++(225:16) and ++(180:16) .. cycle;
+  \fill [BlueGrey900] (56, 40) circle [radius=20];
+}
+\end{scope}},
+ladybird/.pic={
+\begin{scope}[x=3cm/512,y=3cm/512]
+\tikzset{rotate=-45}
+\reflect[split=BlueGrey800 and BlueGrey900]{
+  \fill [fill color] (0,16) ellipse [x radius=96, y radius=144];
+  \foreach \i [count=\n from 0] in {1,0,-1} \foreach \j in {0,1}
+  \fill [fill color, shift=(40-\n*40:96 and 144), 
+    rotate=30-\n*40, shift=(0:\j*60), 
+    xscale=1-\j/3, yscale=1-\j/6, rotate=\i*\j*15]
+    (0,4) -- ++(64,4) -- ++(0,-16) -- (0,-4) -- cycle;
+}
+\reflect[
+  on left ={colors alias={spot as Grey800, wing as Red600}},
+  on right={colors alias={spot as Grey900, wing as Red900}, half clip}
+]{
+\clip [preaction={fill=wing}] 
+  (0,0 |- 45:128 and 144) -- (45:128 and 144) arc (45:-80:128 and 144);
+\fill [spot] 
+  ( 0, 96) circle [radius=32]
+  (64, 64) circle [radius=16]
+  (24,  0) circle [radius=24]
+  (96, 16) circle [radius=12]
+  (72,-64) circle [radius=20];
+}
+\reflect[
+  on left ={colors alias={body as BlueGrey800, eye as Grey100}},
+  on right={colors alias={body as BlueGrey900, eye as Grey200}, half clip}
+]{
+  \fill [body]
+    (16,160) arc (180:90:64) -- ++(4,-4) coordinate [midway] (@)
+    arc (90:180:64) -- cycle;
+  \fill [body] (@) circle [radius=8];
+  \clip [postaction={fill=body}] (80,128) 
+    .. controls ++( 90:32) and ++(  0:32) .. (  0,192)
+    .. controls ++(180:32) and ++( 90:32) .. (-80,128)
+    .. controls ++(270:32) and ++(180:32) .. (  0,96)
+    .. controls ++(  0:32) and ++(270:32) .. cycle;
+  \fill [eye] (64,160) circle [radius=24];
+}
+\end{scope}},
+dog/.pic={
+\begin{scope}[x=3cm/480,y=3cm/480]
+\useasboundingbox (-256, -256) (256, 256);
+\reflect[split=Brown400 and Brown500]{
+  \fill [fill color] (0,-64) ellipse [x radius=160, y radius=144];
+  \fill [fill color] (0, 32) ellipse [x radius=128, y radius=112];
+  \fill [fill color] (32,96)
+  .. controls ++( 75:128) and ++(105:128) .. ++(192,  0)
+  .. controls ++(285: 96) and ++(285: 96) .. ++(-80,-32)
+  .. controls ++(105: 64) and ++( 75: 32) .. cycle;
+}
+\reflect[split={Grey100 and Grey200}]{
+  \clip (0,-64) ellipse [x radius=160, y radius=144];
+  \fill [fill color](0,-224) 
+    .. controls ++(  0:64) and ++(270:64) .. ++(96,64)
+    .. controls ++( 90:64) and ++(270:64) .. ++(-96,192)
+    .. controls ++(270:64) and ++( 90:64) .. ++(-96,-192)
+    .. controls ++(270:64) and ++(180:64) .. cycle;
+}
+\reflect[split={Pink100 and Pink200}]{
+  \fill [fill color](0,-192) ellipse [x radius=28, y radius=32];
+}
+\reflect[split={BlueGrey800 and BlueGrey900}]{
+  \fill [fill color](0,-144) 
+    .. controls ++(  0:20) and ++(315:20) .. ++( 40,64)
+    .. controls ++(135:20) and ++( 45:20) .. ++(-80, 0)
+    .. controls ++(225:20) and ++(180:20) .. cycle;
+  \fill [BlueGrey900] (56, 0) circle [radius=20];
+  \fill [fill color] (-8,-112)
+  -- ++(16,0) -- ++(0,-32) arc (180:360:24)
+  arc (180:0:8) arc (360:180:40);
+}
+\end{scope}},
+dog2/.pic={
+\begin{scope}[x=3cm/480,y=3cm/480]
+\useasboundingbox (-256, -256) (256, 256);
+\reflect[split=Brown400 and Brown500]{
+  \fill [fill color] (0,-64) ellipse [x radius=160, y radius=144];
+  \fill [fill color] (0, 32) ellipse [x radius=128, y radius=112];
+ % \fill [fill color] (32,96)
+ % .. controls ++( 75:128) and ++(105:128) .. ++(192,  0)
+ % .. controls ++(285: 96) and ++(285: 96) .. ++(-80,-32)
+ % .. controls ++(105: 64) and ++( 75: 32) .. cycle;
+   \fill [fill color] (32,96)
+  .. controls ++( 75:128) and ++(105:128) .. ++(230,  0)
+  .. controls ++(285: 96) and ++(285: 96) .. ++(-100,-40)
+  .. controls ++(105: 64) and ++( 75: 32) .. cycle;
+
+}
+\reflect[split={Grey100 and Grey200}]{
+  \clip (0,-64) ellipse [x radius=160, y radius=144];
+  \fill [fill color](0,-224) 
+    .. controls ++(  0:64) and ++(270:64) .. ++(96,64)
+    .. controls ++( 90:64) and ++(270:64) .. ++(-96,192)
+    .. controls ++(270:64) and ++( 90:64) .. ++(-96,-192)
+    .. controls ++(270:64) and ++(180:64) .. cycle;
+}
+\reflect[split={Pink100 and Pink200}]{
+  \fill [fill color](0,-192) ellipse [x radius=28, y radius=82];
+}
+\reflect[split={BlueGrey800 and BlueGrey900}]{
+  \fill [fill color](0,-144) 
+    .. controls ++(  0:20) and ++(315:20) .. ++( 40,64)
+    .. controls ++(135:20) and ++( 45:20) .. ++(-80, 0)
+    .. controls ++(225:20) and ++(180:20) .. cycle;
+  \fill [blue] (0,-144) 
+    .. controls ++(  0:20) and ++(315:20) .. ++( 50,80)
+    .. controls ++(135:20) and ++( 45:20) .. ++(-100, 0)
+    .. controls ++(225:20) and ++(180:20) .. cycle;
+ %%% EYES \fill [BlueGrey900] (56, 0) circle [radius=20];
+   \begin{scope}
+    \clip (56, 0) circle [radius=20];
+    \fill [BlueGrey900] (56, 0) circle [radius=20];
+    \fill [white] (62, 0) circle [radius=20];
+  \end{scope}
+  \fill [BlueGrey900] (50, 8) circle [radius=6];
+
+  %%%% TONGUE but actually "moustache" 
+  %\fill [fill color] (-8,-112)
+  % -- ++(16,0) -- ++(0,-32) arc (180:360:24)
+  % arc (180:0:8) arc (360:180:40);
+    \fill [blue] (-8,-112)
+  -- ++(20,0) -- ++(0,-40) arc (180:360:30)
+  arc (180:0:8) arc (360:180:40);
+
+}
+\end{scope}}
+}
+\begin{document}
+\begin{tikzpicture}
+\foreach \animal [count=\i from 0, evaluate={\x=mod(\i,3)*5; \y=-floor(\i/3)*5;}]
+  in {squid, squid2, squidt}{ % bee,cat,chimpanzee,chipmunk,cow,dog,donkey,duck,horse,ladybird, monkey,owl,shark,
+  % ,squid,squid2
+\pgfmathrandomitem\materialColor{material}
+\scoped[shift={(\x,\y)}]{
+\fill [fill=\materialColor50] circle [radius=2];
+\pic {\animal};
+\node [below]at (0, -2) {\ttfamily\animal};
+}}
+\end{tikzpicture}
+\end{document}
+
