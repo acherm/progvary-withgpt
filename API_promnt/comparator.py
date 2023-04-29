@@ -13,11 +13,11 @@ def comp_files(file1, file2):
     return differences
 
 def main():
-    path = "this is the path"  
-    files = [f for f in os.listdir(path) if f.endswith('.txt')]
+    path = "./RESULTS_TEXT/"  
+    files = [f for f in os.listdir(path) if f.endswith('.md')]
 
-    for i, file1 in enumerate(file):
-        for archivo2 in files[i+1:]:
+    for i, file1 in enumerate(files):
+        for file2 in files[i+1:]:
             print(f"Comparing {file1} and {file2}")
             diff = comp_files(os.path.join(path, file1), os.path.join(path, file2))
 
