@@ -5,7 +5,7 @@ Managing the complexity that arises from having multiple features, variations, a
 We report on new approaches made possible with LLM-based assistants, such as: implementing features and variations through prompts; expanding variability using LLM-generated domain knowledge; and effortlessly incorporating variability across various artifacts, programming languages, and frameworks, as well as different binding times (either compile-time or run-time).
 
 This repository contains:
- * prompts used for programming taks
+ * prompts used for programming tasks
  * sessions with different LLMs (or same prompts replicated with the same LLM)
  * generated code and instructions on how to use it (and computed results if any)
  * Github issues to discuss and review variability taks and sessions 
