@@ -4,6 +4,8 @@ We explore the role of large language model (LLM)-based assistants in addressing
 Managing the complexity that arises from having multiple features, variations, and possible configurations is known to be highly challenging for software developers.
 We report on new approaches made possible with LLM-based assistants, such as: implementing features and variations through prompts; expanding variability using LLM-generated domain knowledge; and effortlessly incorporating variability across various artifacts, programming languages, and frameworks, as well as different binding times (either compile-time or run-time).
 
+Paper: https://inria.hal.science/hal-04153310/ 
+
 This repository contains:
  * prompts used for programming tasks
  * sessions with different LLMs (or same prompts replicated with the same LLM)
