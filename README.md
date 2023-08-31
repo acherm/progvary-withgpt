@@ -26,7 +26,8 @@ This repository contains:
  * transformation of an unfamiliar code with an end-user, Web-based customization tool
    - `varying-unfamiliarcode`: turning unfamiliar TikZ code into a configurable, visual system
    - `varyTikZ`: turning unfamiliar TikZ code into a configurable, visual system 
-   - `varySVG`: turning unfamiliar SVG code into a configurable SVG 
+   - `varySVG`: turning unfamiliar SVG code into a configurable SVG
+   - (new and ongoing work) `crazycat_demo`: a demonstration of a comprehensive Web app for configuring the TikZ cat... Just launch `python crazycat_server.py` and then open your browser ;) More demonstration in this video (warning: weird sound!): https://www.youtube.com/watch?v=pWRwz2-rnEA it is an ongoing work!
    
  ![champanzeegrid](https://github.com/acherm/progvary-withgpt/blob/f75e6e06586d4e354983dd6456df4d49a15d6199/varyTikZ/crazychamps/grid.png)
 
