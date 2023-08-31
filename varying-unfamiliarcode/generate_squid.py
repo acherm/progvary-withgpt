@@ -76,7 +76,7 @@ extra_spots.append({'x': 40, 'y': 120, 'radius': 16, 'color': random_color() if 
 
 # Render the template with the chosen eye colors and spots
 
-crazy_tentacles = True # True
+crazy_tentacles = False # True
 original_tentacles = False # True
 
 prominent_mouth = True

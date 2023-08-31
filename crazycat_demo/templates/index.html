@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Generator</title>
+    <style>
+        /* Add your custom CSS here */
+    svg {
+        width: 105%;
+        height: 110%;
+    }
+
+    fieldset {
+  border: 1px solid #333;
+  border-radius: 2px;
+  padding: 5px;
+  margin-bottom: 1rem; 
+}
+
+legend {
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+div {
+  display: flex;
+  margin-bottom: 0.1rem;
+}
+
+label {
+  flex: 10;
+  margin-right: 1rem;
+}
+
+select {
+  flex: 2;
+}
+
+.float-containter {
+border: 3px solid #fff;
+padding: 10px;
+}
+
+.float-child {
+  width: 15%;
+  float: left;
+  padding: 5px;
+  /* border: 2px solid red;*/
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Add your HTML form for user inputs here -->
+    <form id="configForm">
+        <fieldset>
+            <legend>Customization</legend>
+            <div id="colorInputs"></div>
+        </fieldset>
+    
+        
+    
+        <button type="button" onclick="generateImage()">Beautify the cat!</button>
+    </form>
+    
+
+    
+    <!-- <img id="generatedImage" src="" alt="Generated image" /> -->
+    <div class="float_container">
+    <div class="float-child" id="generatedImage">
+    </div>
+
+    <div class="float-child" style="font-size: 32px">
+      &nbsp; &nbsp; &nbsp; vs original
+    </div>
+
+    <div class="float-child" id="originalImage">
+      <img src="cat.png" style="width: 100%; height: 100%;" />
+    </div>
+  </div>
+  
+
+    <script>
+
+        
+const colorOptions = [
+            "red", "blue", "orange", "brown", "pink", "green", "yellow", "purple", "cyan", "magenta", "teal", "black",
+            "BlueGrey900", "Purple100", "BlueGrey500", "BlueGrey100", "Purple100", "Yellow50", "Grey100"
+        ];
+
+        const colorVariables = [
+            "tail_color", "outter_ear_color", "inner_ear_color", "central_body_color",
+            "inner_body_color", "head_paws_color", "outter_nose_color", "nose_color",
+            "eyes_color", "lower_part_color", "bottom_paws_color", "whiskers_color"
+        ];
+
+        /*const defaultValues = [
+            "BlueGrey900", "BlueGrey900", "Purple100", "BlueGrey900",
+            "BlueGrey100", "BlueGrey900", "BlueGrey500", "Purple100",
+            "Yellow50", "BlueGrey900", "Grey100", "Grey100"
+        ];*/
+
+        const defaultValues = {
+  'Ears, tail, and whisker': ['BlueGrey900', 'BlueGrey900', 'Purple100', 'Grey100'],
+  'Body': ['BlueGrey900', 'BlueGrey100', 'BlueGrey900'],
+  'Head and paws': ['BlueGrey900', 'Grey100', 'BlueGrey500', 'Purple100', 'Yellow50'],
+  'Ear and eyes (scale)': ['1', '1']
+}
+
+        
+
+        /*function createColorSelectOptions(selectElement, defaultValue) {
+            colorOptions.forEach(color => {
+                const option = document.createElement('option');
+                option.value = color;
+                option.textContent = color;
+                if (color === defaultValue) {
+                    option.selected = true;
+                }
+                selectElement.appendChild(option);
+            });
+        }*/
+        function createColorSelectOptions(selectElement, defaultValue) {
+  colorOptions.forEach(color => {
+    const option = document.createElement('option');
+    option.value = color;
+    option.textContent = color;
+    if (color === defaultValue) {
+      option.selected = true; 
+    }
+    selectElement.appendChild(option);
+  });
+}
+
+
+        /*
+        function createColorInputs(container) {
+            colorVariables.forEach((variable, index) => {
+                const label = document.createElement('label');
+                label.htmlFor = variable;
+                label.textContent = variable.replace(/_/g, ' ').replace('color', '') + ':';
+
+                const select = document.createElement('select');
+                select.id = variable;
+                select.name = variable;
+
+                const defaultValue = defaultValues[index];
+                createColorSelectOptions(select, defaultValue);
+
+                container.appendChild(label);
+                container.appendChild(select);
+            });
+        }*/
+
+        const colorGroups = {
+  'Ears, tail, and whisker': ['tail_color', 'outter_ear_color', 'inner_ear_color', 'whiskers_color'],
+  'Body': ['central_body_color', 'inner_body_color', 'lower_part_color'],
+  'Head and paws': ['head_paws_color', 'bottom_paws_color', 'outter_nose_color', 'nose_color', 'eyes_color'],
+  'Ear and eyes (scale)': ['outter_ear_scale', 'eyes_scale'] 
+} 
+
+function createColorInputs(container) {
+
+
+    
+  for (const [groupName, colorVars] of Object.entries(colorGroups)) {
+    if (groupName === 'Ear and eyes (scale)') 
+        continue;
+    const fieldset = document.createElement('fieldset');
+    const legend = document.createElement('legend');
+    legend.textContent = groupName;
+    fieldset.appendChild(legend);
+    container.appendChild(fieldset);
+    
+    for (const colorVar of colorVars) {
+      const div = document.createElement('div');
+      const label = document.createElement('label');
+      label.htmlFor = colorVar;
+      label.textContent = colorVar.replace(/\_/g, ' ').replace('color', '') + ':';
+      const select = document.createElement('select');
+      select.id = colorVar;
+      select.name = colorVar;
+
+      const defaultValue = defaultValues[groupName][colorVars.indexOf(colorVar)];
+      createColorSelectOptions(select, defaultValue); 
+    // const defaultValue = defaultValues[colorVars.indexOf(colorVar)];
+     // createColorSelectOptions(select, defaultValue);
+      div.appendChild(label);
+      div.appendChild(select);
+      fieldset.appendChild(div);
+    }
+  }
+
+for (const [groupName, colorVars] of Object.entries(colorGroups)) {
+    if (groupName === 'Ear and eyes (scale)') {
+      const fieldset = document.createElement('fieldset');
+      const legend = document.createElement('legend');
+      legend.textContent = groupName;
+      fieldset.appendChild(legend);
+      container.appendChild(fieldset); 
+
+      for (const scaleVar of colorVars) {
+        const div = document.createElement('div');
+        const label = document.createElement('label');
+        label.htmlFor = scaleVar;
+        label.textContent = scaleVar.replace(/\_/g, ' ') + ':';
+        const range = document.createElement('input');
+        range.type = 'range';
+        range.id = scaleVar;
+        range.name = scaleVar;
+        range.min = '0.5';
+        range.max = '2.0';
+        range.step = '0.01';
+        range.value = defaultValues[groupName][colorVars.indexOf(scaleVar)];
+        div.appendChild(label);
+        div.appendChild(range);
+        fieldset.appendChild(div);
+      }
+    }
+  }
+}
+
+        // Initialize color inputs
+        createColorInputs(document.getElementById('colorInputs'));
+
+        function generateImage() {
+            const data = {};
+
+            colorVariables.forEach(variable => {
+                data[variable] = document.getElementById(variable).value;
+            });
+            
+            const outter_ear_scale = document.getElementById('outter_ear_scale').value;    
+            data["outter_ear_scale"] = outter_ear_scale;
+
+            const eyes_scale = document.getElementById('eyes_scale').value;    
+            data["eyes_scale"] = eyes_scale;
+
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.text()) // change from 'response.blob()' to 'response.text()'
+            .then(svgString => {
+                const svgElement = new DOMParser().parseFromString(svgString, 'image/svg+xml').documentElement;
+                const container = document.getElementById('generatedImage');
+                container.innerHTML = ''; // Clear previous content
+                svgElement.viewBox = "0 0 400 400";
+                console.log(svgElement);
+                container.appendChild(svgElement);
+            });
+            //.then(response => response.blob())
+            //.then(blob => {
+            //    const url = URL.createObjectURL(blob);
+            //    document.getElementById('generatedImage').src = url;
+            // });
+        }
+    </script>
+</body>
+</html>
